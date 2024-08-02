@@ -1,5 +1,5 @@
+import { SVGProps } from 'react';
 import { css } from '@emotion/react';
-import { fluid, SM, XXL } from '../styles';
 
 const fileStyles = css`
   display: inline-flex;
@@ -34,7 +34,13 @@ export function MaterialSymbolsFileSaveRounded(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-function File({ href, name, size }) {
+interface FileProps {
+  href: string;
+  name: string;
+  size: string;
+}
+
+function File({ href, name, size }: FileProps) {
   return (
     <a href={href} css={fileStyles}>
       <div className="icon">

@@ -1,7 +1,13 @@
 import Section from '../components/Section';
 import { css } from '@emotion/react';
 
-const primaryColors = [
+interface ColorSwatch {
+  name: string;
+  hex: string;
+  rgb: string;
+}
+
+const primaryColors: ColorSwatch[] = [
   {
     name: 'Night',
     hex: '#1C2632',
@@ -19,7 +25,7 @@ const primaryColors = [
   },
 ];
 
-const secondaryColors = [
+const secondaryColors: ColorSwatch[] = [
   {
     name: 'Sawdust',
     hex: '#C9C2B2',
@@ -52,7 +58,7 @@ const swatchStyles = css`
   border: 1px solid transparent;
 `;
 
-function hexToLuminance(hex) {
+function hexToLuminance(hex: string) {
   // Remove the leading hash (#) if present
   hex = hex.replace(/^#/, '');
 
@@ -75,7 +81,7 @@ function hexToLuminance(hex) {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
-function SwatchGrid({ colors }) {
+function SwatchGrid({ colors }: { colors: ColorSwatch[] }) {
   return (
     <div
       css={css`
