@@ -2,7 +2,8 @@ import { css } from '@emotion/react';
 import { fluid, SM, XXL } from '../styles';
 import Container from '../components/Container';
 import Logo from '../assets/logo.svg';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import AnimatedOutlet from '../components/AnimatedOutlet';
 
 const containerStyles = css`
   padding-top: 1px;
@@ -77,7 +78,7 @@ export default function Root() {
         <NavLink to="applications">Applications</NavLink>
       </nav>
       <main css={mainStyles}>
-        <Outlet />
+        <AnimatedOutlet />
       </main>
       <footer css={footerStyles}>
         <div className="container">

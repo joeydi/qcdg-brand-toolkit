@@ -9,28 +9,52 @@ import Typography from './routes/Typography.tsx';
 import Applications from './routes/Applications.tsx';
 import { Global } from '@emotion/react';
 import { globalStyles } from './styles.tsx';
+import AnimatedLayout from './components/AnimatedRoute.tsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
     children: [
-      { index: true, element: <Guidelines /> },
+      {
+        index: true,
+        element: (
+          <AnimatedLayout>
+            <Guidelines />
+          </AnimatedLayout>
+        ),
+      },
       {
         path: 'logo',
-        element: <Logo />,
+        element: (
+          <AnimatedLayout>
+            <Logo />
+          </AnimatedLayout>
+        ),
       },
       {
         path: 'colors',
-        element: <Colors />,
+        element: (
+          <AnimatedLayout>
+            <Colors />
+          </AnimatedLayout>
+        ),
       },
       {
         path: 'typography',
-        element: <Typography />,
+        element: (
+          <AnimatedLayout>
+            <Typography />
+          </AnimatedLayout>
+        ),
       },
       {
         path: 'applications',
-        element: <Applications />,
+        element: (
+          <AnimatedLayout>
+            <Applications />
+          </AnimatedLayout>
+        ),
       },
     ],
   },
