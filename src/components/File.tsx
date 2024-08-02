@@ -34,15 +34,14 @@ export function MaterialSymbolsFileSaveRounded(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-interface FileProps {
-  href: string;
+interface FileProps extends React.ComponentPropsWithoutRef<'a'> {
   name: string;
   size: string;
 }
 
-function File({ href, name, size }: FileProps) {
+function File({ name, size, ...rest }: FileProps) {
   return (
-    <a href={href} css={fileStyles}>
+    <a css={fileStyles} {...rest}>
       <div className="icon">
         <MaterialSymbolsFileSaveRounded />
       </div>

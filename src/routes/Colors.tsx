@@ -10,7 +10,7 @@ interface ColorSwatch {
   rgb: string;
 }
 
-const primaryColors: ColorSwatch[] = [
+export const primaryColors: ColorSwatch[] = [
   {
     name: 'Night',
     hex: '#1C2632',
@@ -28,7 +28,7 @@ const primaryColors: ColorSwatch[] = [
   },
 ];
 
-const secondaryColors: ColorSwatch[] = [
+export const secondaryColors: ColorSwatch[] = [
   {
     name: 'Sawdust',
     hex: '#C9C2B2',
