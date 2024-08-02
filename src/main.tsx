@@ -7,6 +7,7 @@ import Logo from './routes/Logo.tsx';
 import Colors from './routes/Colors.tsx';
 import Typography from './routes/Typography.tsx';
 import Applications from './routes/Applications.tsx';
+import NotFound from './routes/NotFound.tsx';
 import { Global } from '@emotion/react';
 import { globalStyles } from './styles.tsx';
 import AnimatedLayout from './components/AnimatedRoute.tsx';
@@ -57,6 +58,14 @@ const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: '*',
+    element: (
+      <AnimatedLayout>
+        <NotFound />
+      </AnimatedLayout>
+    ),
   },
 ]);
 
