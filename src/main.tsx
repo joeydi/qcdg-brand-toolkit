@@ -4,8 +4,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Root from './routes/Root.tsx';
 import Guidelines from './routes/Guidelines.tsx';
 import Logo from './routes/Logo.tsx';
-import Typography from './routes/Typography.tsx';
 import Colors from './routes/Colors.tsx';
+import Typography from './routes/Typography.tsx';
+import Applications from './routes/Applications.tsx';
 import { Global } from '@emotion/react';
 import { globalStyles } from './styles.tsx';
 
@@ -20,12 +21,16 @@ const router = createBrowserRouter([
         element: <Logo />,
       },
       {
+        path: 'colors',
+        element: <Colors />,
+      },
+      {
         path: 'typography',
         element: <Typography />,
       },
       {
-        path: 'colors',
-        element: <Colors />,
+        path: 'applications',
+        element: <Applications />,
       },
     ],
   },

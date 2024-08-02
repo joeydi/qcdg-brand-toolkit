@@ -74,6 +74,7 @@ export default function Root() {
         <NavLink to="logo">Logo</NavLink>
         <NavLink to="colors">Colors</NavLink>
         <NavLink to="typography">Typography</NavLink>
+        <NavLink to="applications">Applications</NavLink>
       </nav>
       <main css={mainStyles}>
         <Outlet />
