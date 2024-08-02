@@ -134,7 +134,7 @@ export default function Logo() {
           The QCDG logo is a unique and distinctive visual representation of your brand, carefully crafted to evoke building
           structures, a target, a clover, and the coming together of four unique partners to form a greater whole.
         </p>
-        <File name="QCDG Brand Guidelines.pdf" size="12.5 MB" href="/QCDG Brand Guidelines.pdf" target="_blank" />
+        <File name="QCDG Logo Variations.zip" size="3.2 MB" href="/QCDG Logo Variations.zip" target="_blank" />
       </Section>
       <Section>
         <h3>Color</h3>

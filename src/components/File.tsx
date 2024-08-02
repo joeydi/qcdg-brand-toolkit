@@ -11,6 +11,7 @@ const fileStyles = css`
   border: 1px solid var(--color-sawdust);
   border-radius: 4px;
   text-decoration: none;
+  line-height: 1;
   color: var(--color-slate);
   transition: background-color 0.25s, color 0.25s;
 
@@ -46,7 +47,7 @@ function File({ name, size, ...rest }: FileProps) {
         <MaterialSymbolsFileSaveRounded />
       </div>
       <span className="name">{name}</span>
-      <div className="size">{size}</div>
+      <div css={{ whiteSpace: 'nowrap' }}>{size}</div>
     </a>
   );
 }
