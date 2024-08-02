@@ -1,8 +1,5 @@
+import { PropsWithChildren } from 'react';
 import { motion } from 'framer-motion';
-
-type Props = {
-  children: ReactNode;
-};
 
 const variants = {
   hidden: { opacity: 0, x: 0, y: -10 },
@@ -10,7 +7,7 @@ const variants = {
   exit: { opacity: 0, x: 0, y: 10 },
 };
 
-const AnimatedLayout = ({ children }: Props): React.JSX.Element => {
+const AnimatedLayout: React.FC<PropsWithChildren> = ({ children, ...rest }) => {
   return (
     <motion.div
       initial="hidden"
@@ -18,7 +15,8 @@ const AnimatedLayout = ({ children }: Props): React.JSX.Element => {
       exit="exit"
       variants={variants}
       transition={{ duration: 0.25, type: 'easeInOut' }}
-      className="relative">
+      className="relative"
+      {...rest}>
       {children}
     </motion.div>
   );
