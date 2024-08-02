@@ -1,5 +1,8 @@
 import Section from '../components/Section';
 import { css } from '@emotion/react';
+import { hexToLuminance } from '../utils';
+import TooltipCursor from '../components/TooltipCursor';
+import { useRef, useState } from 'react';
 
 interface ColorSwatch {
   name: string;
@@ -44,9 +47,6 @@ const secondaryColors: ColorSwatch[] = [
 ];
 
 const swatchStyles = css`
-  flex-grow: 1;
-  flex-shrink: 0;
-  width: 12rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -58,57 +58,64 @@ const swatchStyles = css`
   border: 1px solid transparent;
 `;
 
-function hexToLuminance(hex: string) {
-  // Remove the leading hash (#) if present
-  hex = hex.replace(/^#/, '');
+function Swatch({ color }: { color: ColorSwatch }) {
+  const [tooltipContent, setTooltipContent] = useState('Copy hex code');
 
-  // Parse the r, g, b values
-  let r = parseInt(hex.substring(0, 2), 16);
-  let g = parseInt(hex.substring(2, 4), 16);
-  let b = parseInt(hex.substring(4, 6), 16);
+  const timeoutId = useRef<number>(0);
 
-  // Convert RGB to the sRGB range
-  r /= 255;
-  g /= 255;
-  b /= 255;
+  const copyHex = async (hex: string) => {
+    window.clearTimeout(timeoutId.current);
 
-  // Apply gamma correction
-  r = r <= 0.03928 ? r / 12.92 : Math.pow((r + 0.055) / 1.055, 2.4);
-  g = g <= 0.03928 ? g / 12.92 : Math.pow((g + 0.055) / 1.055, 2.4);
-  b = b <= 0.03928 ? b / 12.92 : Math.pow((b + 0.055) / 1.055, 2.4);
+    await navigator.clipboard.writeText(hex);
+    setTooltipContent('Copied!');
 
-  // Calculate the luminance
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    timeoutId.current = window.setTimeout(() => {
+      setTooltipContent('Copy hex code');
+    }, 1000);
+  };
+
+  const borderColor = hexToLuminance(color.hex) > 0.75 ? 'var(--color-sawdust)' : 'transparent';
+  const textColor = hexToLuminance(color.hex) > 0.5 ? 'var(--color-slate)' : 'var(--color-sand)';
+  const tooltipStyle = hexToLuminance(color.hex) > 0.5 ? 'dark' : 'light';
+
+  return (
+    <TooltipCursor
+      content={tooltipContent}
+      delay={1000}
+      tooltipStyle={tooltipStyle}
+      css={{ flexGrow: 1, flexShrink: 0, width: '12rem' }}>
+      <div
+        css={[swatchStyles, { backgroundColor: color.hex, borderColor: borderColor, color: textColor }]}
+        onClick={() => {
+          copyHex(color.hex);
+        }}>
+        <span css={{ textTransform: 'uppercase', fontFamily: 'var(--ff-sans-alt)', fontWeight: 'var(--fw-bold)' }}>
+          {color.name}
+        </span>
+        <div css={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
+          <span>HEX</span>
+          <span>{color.hex}</span>
+        </div>
+        <div css={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
+          <span>RGB</span>
+          <span>{color.rgb}</span>
+        </div>
+      </div>
+    </TooltipCursor>
+  );
 }
 
 function SwatchGrid({ colors }: { colors: ColorSwatch[] }) {
   return (
     <div
-      css={css`
-        display: flex;
-        flex-flow: row wrap;
-        margin: 2rem 0;
-      `}>
-      {colors.map((color) => {
-        const borderColor = hexToLuminance(color.hex) > 0.75 ? 'var(--color-sawdust)' : 'transparent';
-        const textColor = hexToLuminance(color.hex) > 0.5 ? 'var(--color-slate)' : 'var(--color-sand)';
-
-        return (
-          <div key={color.name} css={[swatchStyles, { backgroundColor: color.hex, borderColor: borderColor, color: textColor }]}>
-            <span css={{ textTransform: 'uppercase', fontFamily: 'var(--ff-sans-alt)', fontWeight: 'var(--ff-bold)' }}>
-              {color.name}
-            </span>
-            <div css={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
-              <span>HEX</span>
-              <span>{color.hex}</span>
-            </div>
-            <div css={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
-              <span>RGB</span>
-              <span>{color.rgb}</span>
-            </div>
-          </div>
-        );
-      })}
+      css={{
+        display: 'flex',
+        flexFlow: 'row wrap',
+        margin: '2rem 0',
+      }}>
+      {colors.map((color) => (
+        <Swatch key={color.name} color={color} />
+      ))}
     </div>
   );
 }

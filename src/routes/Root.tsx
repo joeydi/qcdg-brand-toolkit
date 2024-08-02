@@ -5,15 +5,6 @@ import Logo from '../assets/logo.svg';
 import { NavLink } from 'react-router-dom';
 import AnimatedOutlet from '../components/AnimatedOutlet';
 
-const containerStyles = css`
-  padding-top: 1px;
-  padding-bottom: 1px;
-`;
-
-const headerStyles = css`
-  margin-top: ${fluid(48, 96, SM, XXL)};
-`;
-
 const navStyles = css`
   display: flex;
   flex-flow: row wrap;
@@ -46,24 +37,20 @@ const navStyles = css`
   }
 `;
 
-const mainStyles = css`
-  margin: ${fluid(96, 192, SM, XXL)} 0;
-`;
-
-const footerStyles = css`
-  margin: ${fluid(96, 192, SM, XXL)} 0;
-`;
-
 export default function Root() {
   return (
-    <Container css={containerStyles}>
-      <header css={headerStyles}>
+    <Container
+      css={{
+        paddingTop: '1px',
+        paddingBottom: '1px',
+      }}>
+      <header css={{ marginTop: fluid(48, 96, SM, XXL) }}>
         <img
-          css={css`
-            width: auto;
-            height: 2rem;
-            margin-bottom: ${fluid(96, 192, SM, XXL)};
-          `}
+          css={{
+            width: 'auto',
+            height: '2rem',
+            marginBottom: fluid(96, 192, SM, XXL),
+          }}
           src={Logo}
           alt="Queen City Development Group logo"
         />
@@ -77,10 +64,10 @@ export default function Root() {
         <NavLink to="typography">Typography</NavLink>
         <NavLink to="applications">Applications</NavLink>
       </nav>
-      <main css={mainStyles}>
+      <main css={{ marginTop: fluid(96, 192, SM, XXL), marginBottom: fluid(96, 192, SM, XXL) }}>
         <AnimatedOutlet />
       </main>
-      <footer css={footerStyles}>
+      <footer css={{ marginTop: fluid(96, 192, SM, XXL), marginBottom: fluid(96, 192, SM, XXL) }}>
         <div className="container">
           <p>&copy; 2024 Queen City Development Group</p>
         </div>

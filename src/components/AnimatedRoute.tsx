@@ -34,7 +34,7 @@ const variants = {
 
 const AnimatedLayout: React.FC<PropsWithChildren> = ({ children, ...rest }) => {
   return (
-    <motion.div initial="hidden" animate="enter" exit="exit" variants={variants} className="relative" {...rest}>
+    <motion.div initial="hidden" animate="enter" exit="exit" variants={variants} {...rest}>
       {children}
     </motion.div>
   );
