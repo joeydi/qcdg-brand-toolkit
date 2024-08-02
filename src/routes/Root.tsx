@@ -11,7 +11,7 @@ const containerStyles = css`
 `;
 
 const headerStyles = css`
-  margin-top: ${fluid(96, 192, SM, XXL)};
+  margin-top: ${fluid(48, 96, SM, XXL)};
 `;
 
 const navStyles = css`
@@ -29,8 +29,8 @@ const navStyles = css`
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 0.03125rem;
-    font-family: var(--font-family-mono);
-    font-weight: var(--font-weight-medium);
+    font-family: var(--ff-mono);
+    font-weight: var(--fw-medium);
     color: var(--color-slate);
     transition: background-color 0.25s, color 0.25s;
 

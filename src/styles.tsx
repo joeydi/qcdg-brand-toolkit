@@ -12,6 +12,10 @@ export const MQ_LG = `@media(min-width: ${LG}px)`;
 export const MQ_XL = `@media(min-width: ${XL}px)`;
 export const MQ_XXL = `@media(min-width: ${XXL}px)`;
 
+export const EASE_IN = [0.6, 0.1, 0.9, 0.4];
+export const EASE_OUT = [0.1, 0.6, 0.4, 0.9];
+export const EASE_IN_OUT = [0.1, 0.6, 0.9, 0.4];
+
 export function fluid(minValue: number, maxValue: number, minWidth: number, maxWidth: number) {
   const slope = (maxValue - minValue) / (maxWidth - minWidth);
   const yAxisIntersection = -minWidth * slope + minValue;
@@ -20,6 +24,70 @@ export function fluid(minValue: number, maxValue: number, minWidth: number, maxW
 }
 
 export const globalStyles = css`
+  @font-face {
+    font-display: swap;
+    font-family: 'Gotham';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/webfonts/subset-GothamBook.woff2') format('woff2');
+  }
+
+  @font-face {
+    font-display: swap;
+    font-family: 'Gotham';
+    font-style: normal;
+    font-weight: 700;
+    src: url('/webfonts/subset-GothamBold.woff2') format('woff2');
+  }
+
+  @font-face {
+    font-display: swap;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/webfonts/dm-sans-v15-latin-regular.woff2') format('woff2');
+  }
+
+  @font-face {
+    font-display: swap;
+    font-family: 'DM Sans';
+    font-style: italic;
+    font-weight: 400;
+    src: url('/webfonts/dm-sans-v15-latin-italic.woff2') format('woff2');
+  }
+
+  @font-face {
+    font-display: swap;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: url('/webfonts/dm-sans-v15-latin-700.woff2') format('woff2');
+  }
+
+  @font-face {
+    font-display: swap;
+    font-family: 'DM Sans';
+    font-style: italic;
+    font-weight: 700;
+    src: url('/webfonts/dm-sans-v15-latin-700italic.woff2') format('woff2');
+  }
+
+  @font-face {
+    font-display: swap;
+    font-family: 'DM Mono';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/dm-mono-v14-latin-regular.woff2') format('woff2');
+  }
+
+  @font-face {
+    font-display: swap;
+    font-family: 'DM Mono';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../fonts/dm-mono-v14-latin-500.woff2') format('woff2');
+  }
+
   :root {
     // Color
     --color-black: #000000;
@@ -33,30 +101,23 @@ export const globalStyles = css`
     --color-cherry: #a35139;
 
     // Type
-    --font-weight-regular: 400;
-    --font-weight-medium: 500;
-    --font-weight-semibold: 600;
-    --font-weight-bold: 700;
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-bold: 700;
 
-    --font-family-sans: 'DM Sans', sans-serif;
-    --font-family-sans-alt: 'Gotham Book', sans-serif;
-    --font-family-sans-alt-bold: 'Gotham Bold', sans-serif;
-    --font-family-mono: 'DM Mono', monospace;
+    --ff-sans: 'DM Sans', sans-serif;
+    --ff-sans-alt: 'Gotham', sans-serif;
+    --ff-mono: 'DM Mono', monospace;
 
     // Grid
-    // --container-padding: ${fluid(20, 60, SM, XXL)};
+    --container-padding: ${fluid(20, 60, SM, XXL)};
     --container-max-width: 1320px;
     --grid-gutter-width: 20px;
 
     // Transitions
-    --transition-snappy: cubic-bezier(0.42, 0, 0.05, 0.99);
-    --transition-ease-in: cubic-bezier(0.42, 0, 0.9, 0.51);
-    --transition-ease-out: cubic-bezier(0, 0.5, 0.5, 1);
-    --transition-ease-in-out: cubic-bezier(0.57, 0.18, 0.49, 0.97);
-    --transition-ease-out-back: cubic-bezier(0.35, 1.6, 0.54, 0.96);
-
-    // Spacing
-    // --header-height: ${fluid(60, 80, SM, XXL)};
+    --transition-ease-in: cubic-bezier(${EASE_IN.join(', ')});
+    --transition-ease-out: cubic-bezier(${EASE_OUT.join(', ')});
+    --transition-ease-in-out: cubic-bezier(${EASE_IN_OUT.join(', ')});
 
     // Shadows
     --box-shadow-small: 0px 0.6px 1.7px rgba(0, 0, 0, 0.008), 0px 1.4px 4px rgba(0, 0, 0, 0.012),
@@ -82,7 +143,7 @@ export const globalStyles = css`
     height: 100%;
     line-height: 1.5;
     font-size: ${fluid(16, 24, SM, XXL)};
-    font-family: var(--font-family-sans);
+    font-family: var(--ff-sans);
     color: var(--color-slate);
     background-color: var(--color-sand);
   }
@@ -94,6 +155,7 @@ export const globalStyles = css`
   svg {
     display: block;
     max-width: 100%;
+    height: auto;
   }
 
   input,
@@ -116,11 +178,13 @@ export const globalStyles = css`
   h5,
   h6 {
     margin-bottom: 0.5rem;
-    font-family: var(--font-family-sans-alt-bold);
+    font-family: var(--ff-sans-alt);
+    font-weight: var(--fw-bold);
     overflow-wrap: break-word;
 
     span {
-      font-family: var(--font-family-sans-alt);
+      font-family: var(--ff-sans-alt);
+      font-weight: var(--fw-regular);
     }
   }
 
@@ -142,7 +206,7 @@ export const globalStyles = css`
   }
 
   .lead {
-    max-width: 14.25em;
+    max-width: 15em;
     line-height: ${9 / 8};
     font-size: ${fluid(32, 64, SM, XXL)};
   }

@@ -20,7 +20,7 @@ const fileStyles = css`
   }
 
   .name {
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--fw-bold);
   }
 `;
 

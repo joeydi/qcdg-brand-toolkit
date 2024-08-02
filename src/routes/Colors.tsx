@@ -52,7 +52,7 @@ const swatchStyles = css`
   justify-content: flex-end;
   gap: 0.25rem;
   padding: 1rem;
-  font-family: var(--font-family-mono);
+  font-family: var(--ff-mono);
   aspect-ratio: 1;
   background: var(--color-sawdust);
   border: 1px solid transparent;
@@ -95,7 +95,9 @@ function SwatchGrid({ colors }: { colors: ColorSwatch[] }) {
 
         return (
           <div key={color.name} css={[swatchStyles, { backgroundColor: color.hex, borderColor: borderColor, color: textColor }]}>
-            <span css={{ textTransform: 'uppercase', fontFamily: 'var(--font-family-sans-alt-bold)' }}>{color.name}</span>
+            <span css={{ textTransform: 'uppercase', fontFamily: 'var(--ff-sans-alt)', fontWeight: 'var(--ff-bold)' }}>
+              {color.name}
+            </span>
             <div css={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
               <span>HEX</span>
               <span>{color.hex}</span>
