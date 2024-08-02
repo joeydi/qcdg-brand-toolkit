@@ -122,7 +122,7 @@ const variants = {
 };
 
 export default function Logo() {
-  const [logoFill, setLogoFill] = useState(colors[0].hex);
+  const [logoFill, setLogoFill] = useState(colors[1].hex);
   const [logoStyle, setLogoStyle] = useState('QCDG');
   const backgroundColor = hexToLuminance(logoFill) > 0.5 ? 'var(--color-slate)' : 'var(--color-sand)';
 
@@ -175,6 +175,7 @@ export default function Logo() {
             backgroundColor: backgroundColor,
             borderRadius: 4,
             border: '1px solid var(--color-sawdust)',
+            transition: 'background-color 0.25s',
           }}>
           <AnimatePresence mode="wait">
             {logoStyle === 'Symbol' && (
