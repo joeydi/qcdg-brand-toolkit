@@ -1,9 +1,10 @@
+import { RefObject } from 'react';
 import { css } from '@emotion/react';
 import { fluid, SM, XXL, EASE_IN, EASE_OUT } from '../styles';
 import Section from '../components/Section';
 import File from '../components/File';
 import { primaryColors, secondaryColors } from './Colors';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { hexToLuminance } from '../utils';
 
@@ -121,10 +122,100 @@ const variants = {
   },
 };
 
+const downloadButtonStyles = css({
+  padding: '0.5rem 1.25rem',
+  backgroundColor: 'rgba(255, 255, 255, 0.25)',
+  border: '1px solid var(--color-sawdust)',
+  borderRadius: '4px',
+  textAlign: 'center',
+  textDecoration: 'none',
+  textTransform: 'uppercase',
+  letterSpacing: '0.03125rem',
+  fontFamily: 'var(--ff-mono)',
+  fontWeight: 'var(--fw-medium)',
+  color: 'var(--color-slate)',
+  cursor: 'pointer',
+  transition: 'background-color 0.25s, color 0.25s',
+
+  '&:hover': {
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    color: 'var(--color-night)',
+  },
+
+  '&.active': {
+    backgroundColor: 'rgba(255, 255, 255, 0.75)',
+    color: 'var(--color-night)',
+  },
+});
+
 export default function Logo() {
-  const [logoFill, setLogoFill] = useState(colors[1].hex);
+  const [logoColor, setLogoColor] = useState(colors[1]);
   const [logoStyle, setLogoStyle] = useState('QCDG');
-  const backgroundColor = hexToLuminance(logoFill) > 0.5 ? 'var(--color-slate)' : 'var(--color-sand)';
+  const backgroundColor = hexToLuminance(logoColor.hex) > 0.5 ? 'var(--color-slate)' : 'var(--color-sand)';
+  const darkButtonStyles =
+    hexToLuminance(logoColor.hex) > 0.5
+      ? css({
+          backgroundColor: 'rgba(255, 255, 255, 0.125)',
+          borderColor: 'rgba(255, 255, 255, 0.25)',
+          color: 'var(--color-sand)',
+
+          '&:hover': {
+            backgroundColor: 'rgba(255, 255, 255, 0.25)',
+            color: 'white',
+          },
+        })
+      : null;
+
+  const SVGContainer: RefObject<HTMLDivElement> = useRef(null);
+
+  const downloadSVG = () => {
+    const svg = SVGContainer?.current?.querySelector('svg');
+    if (svg) {
+      const blob = new Blob([svg.outerHTML], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.setAttribute('download', `Logo - ${logoStyle} - ${logoColor.name}.svg`);
+      a.setAttribute('href', url);
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      a.remove;
+    }
+  };
+
+  const downloadPNG = () => {
+    const svg = SVGContainer?.current?.querySelector('svg');
+
+    if (svg) {
+      const blob = new Blob([svg.outerHTML], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+      const width = svg.getAttribute('width') || '1920';
+      const height = svg.getAttribute('height') || '1080';
+
+      const image = new Image();
+      image.addEventListener('load', () => {
+        const canvas = document.createElement('canvas');
+        canvas.setAttribute('width', width);
+        canvas.setAttribute('height', height);
+
+        const context = canvas.getContext('2d');
+        if (context) {
+          context.drawImage(image, 0, 0, parseInt(width), parseInt(height));
+
+          const dataUrl = canvas.toDataURL('image/png');
+          const a = document.createElement('a');
+          a.setAttribute('download', `Logo - ${logoStyle} - ${logoColor.name}.png`);
+          a.setAttribute('href', dataUrl);
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          a.click();
+          a.remove;
+        }
+      });
+
+      image.src = url;
+    }
+  };
 
   return (
     <>
@@ -143,8 +234,8 @@ export default function Logo() {
             return (
               <button
                 key={color.name}
-                onClick={() => setLogoFill(color.hex)}
-                className={logoFill === color.hex ? 'active' : undefined}>
+                onClick={() => setLogoColor(color)}
+                className={logoColor.hex === color.hex ? 'active' : undefined}>
                 <div css={{ width: '1rem', aspectRatio: 1, backgroundColor: color.hex }}></div>
                 <span>{color.name}</span>
               </button>
@@ -166,7 +257,9 @@ export default function Logo() {
       </Section>
       <Section>
         <div
+          ref={SVGContainer}
           css={{
+            position: 'relative',
             padding: '1rem',
             display: 'flex',
             aspectRatio: 2,
@@ -180,28 +273,46 @@ export default function Logo() {
           <AnimatePresence mode="wait">
             {logoStyle === 'Symbol' && (
               <motion.div key="Symbol" initial="hidden" animate="enter" exit="exit" variants={variants}>
-                <LogoSymbol fill={logoFill} css={{ height: '8rem', width: 'auto', path: { transition: 'fill 0.25s' } }} />
+                <LogoSymbol fill={logoColor.hex} css={{ height: '8rem', width: 'auto', path: { transition: 'fill 0.25s' } }} />
               </motion.div>
             )}
             {logoStyle === 'QCDG' && (
               <motion.div key="QCDG" initial="hidden" animate="enter" exit="exit" variants={variants}>
-                <LogoQCDG fill={logoFill} css={{ height: '8rem', width: 'auto', path: { transition: 'fill 0.25s' } }} />
+                <LogoQCDG fill={logoColor.hex} css={{ height: '8rem', width: 'auto', path: { transition: 'fill 0.25s' } }} />
               </motion.div>
             )}
             {logoStyle === 'Queen City' && (
               <motion.div key="Queen City" initial="hidden" animate="enter" exit="exit" variants={variants}>
-                <LogoQueenCity fill={logoFill} css={{ height: '8rem', width: 'auto', path: { transition: 'fill 0.25s' } }} />
+                <LogoQueenCity fill={logoColor.hex} css={{ height: '8rem', width: 'auto', path: { transition: 'fill 0.25s' } }} />
               </motion.div>
             )}
             {logoStyle === 'Queen City Development Group' && (
               <motion.div key="Queen City Development Group" initial="hidden" animate="enter" exit="exit" variants={variants}>
                 <LogoQueenCityDevelopmentGroup
-                  fill={logoFill}
+                  fill={logoColor.hex}
                   css={{ height: '8rem', width: 'auto', path: { transition: 'fill 0.25s' } }}
                 />
               </motion.div>
             )}
           </AnimatePresence>
+          <div
+            css={{
+              position: 'absolute',
+              bottom: '1rem',
+              left: 0,
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '1rem',
+            }}>
+            <button css={[downloadButtonStyles, darkButtonStyles]} onClick={downloadSVG}>
+              Download SVG
+            </button>
+            <button css={[downloadButtonStyles, darkButtonStyles]} onClick={downloadPNG}>
+              Download PNG
+            </button>
+          </div>
         </div>
       </Section>
     </>

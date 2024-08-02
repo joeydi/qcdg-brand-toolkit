@@ -3,7 +3,6 @@ import { fluid, SM, XXL } from '../styles';
 import Container from '../components/Container';
 import Logo from '../assets/logo.svg';
 import { NavLink } from 'react-router-dom';
-import AnimatedOutlet from '../components/AnimatedOutlet';
 
 const navStyles = css`
   display: flex;
