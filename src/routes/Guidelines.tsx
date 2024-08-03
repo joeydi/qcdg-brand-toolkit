@@ -2,9 +2,10 @@ import { useEffect, useRef, RefObject, MutableRefObject } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { getRandom } from '../utils';
-import { fluid, SM, XXL } from '../styles';
+import { fluid, MQ, SM, XXL } from '../styles';
 import Section from '../components/Section';
 import File from '../components/File';
+import { css } from '@emotion/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -81,14 +82,21 @@ export default function Guidelines() {
         visual consistency, while the condensed letterforms and slighter heavier weight improve readability at small sizes.
       </p>
       <File href="/QCDG Brand Guidelines.pdf" target="_blank" name="QCDG Brand Guidelines.pdf" size="12.5 MB" />
-      <div ref={pinRef}>
+      <div ref={pinRef} css={{ marginTop: fluid(36, 96, SM, XXL) }}>
         <div
           ref={carouselRef}
           css={{
+            '--marginX': fluid(8, 24, SM, XXL),
             display: 'flex',
+            alignItems: 'center',
             gap: '1rem',
-            height: '50vh',
-            paddingTop: fluid(36, 96, SM, XXL),
+            marginLeft: 'calc(var(--marginX) * -1)',
+            marginRight: 'calc(var(--marginX) * -1)',
+
+            [MQ.xxl]: {
+              marginLeft: 'calc((100vw - var(--container-max-width)) / -3)',
+              marginRight: 'calc((100vw - var(--container-max-width)) / -3)',
+            },
           }}>
           {pages.map((page) => {
             return (
@@ -99,6 +107,7 @@ export default function Guidelines() {
                 css={{
                   flexShrink: 0,
                   aspectRatio: 1920 / 1080,
+                  width: '100%',
                   objectFit: 'cover',
                   transform: `rotate(${getRandom(-1, 1)}deg)`,
                   border: '4px solid white',
