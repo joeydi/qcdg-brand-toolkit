@@ -20,3 +20,13 @@ export function hexToLuminance(hex: string) {
   // Calculate the luminance
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
+
+export function getRandomInt(min: number, max: number) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function getRandom(min: number, max: number) {
+  return Math.random() * (max - min) + min;
+}
