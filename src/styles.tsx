@@ -6,11 +6,14 @@ export const LG = 992;
 export const XL = 1200;
 export const XXL = 1440;
 
-export const MQ_SM = `@media(min-width: ${SM}px)`;
-export const MQ_MD = `@media(min-width: ${MD}px)`;
-export const MQ_LG = `@media(min-width: ${LG}px)`;
-export const MQ_XL = `@media(min-width: ${XL}px)`;
-export const MQ_XXL = `@media(min-width: ${XXL}px)`;
+// export const MQ_SM = `@media(min-width: ${SM}px)`;
+// export const MQ_MD = `@media(min-width: ${MD}px)`;
+// export const MQ_LG = `@media(min-width: ${LG}px)`;
+// export const MQ_XL = `@media(min-width: ${XL}px)`;
+// export const MQ_XXL = `@media(min-width: ${XXL}px)`;
+
+export const BREAKPOINTS = { sm: SM, md: MD, lg: LG, xl: XL, xxl: XXL };
+export const MQ = Object.fromEntries(Object.entries(BREAKPOINTS).map(([key, value]) => [key, `@media (min-width: ${value}px)`]));
 
 export const EASE_IN = [0.6, 0.1, 0.9, 0.4];
 export const EASE_OUT = [0.1, 0.6, 0.4, 0.9];
@@ -142,7 +145,7 @@ export const globalStyles = css`
   body {
     height: 100%;
     line-height: 1.5;
-    font-size: ${fluid(16, 24, SM, XXL)};
+    font-size: ${fluid(14, 24, SM, XXL)};
     font-family: var(--ff-sans);
     color: var(--color-slate);
     background-color: var(--color-sand);
@@ -191,13 +194,13 @@ export const globalStyles = css`
   h1 {
     text-transform: uppercase;
     line-height: ${7 / 8};
-    font-size: ${fluid(64, 128, SM, XXL)};
+    font-size: ${fluid(36, 128, SM, XXL)};
   }
 
   h2 {
     text-transform: uppercase;
     line-height: ${9 / 8};
-    font-size: ${fluid(32, 64, SM, XXL)};
+    font-size: ${fluid(20, 64, SM, XXL)};
   }
 
   h3 {
@@ -208,6 +211,6 @@ export const globalStyles = css`
   .lead {
     max-width: 15em;
     line-height: ${9 / 8};
-    font-size: ${fluid(32, 64, SM, XXL)};
+    font-size: ${fluid(20, 64, SM, XXL)};
   }
 `;

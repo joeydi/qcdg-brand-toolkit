@@ -13,13 +13,13 @@ export default function Root() {
         paddingTop: '1px',
         paddingBottom: '1px',
       }}>
-      <header css={{ marginTop: fluid(48, 96, SM, XXL) }}>
+      <header css={{ marginTop: fluid(36, 96, SM, XXL) }}>
         <Link to="/">
           <img
             css={{
               width: 'auto',
-              height: '2rem',
-              marginBottom: fluid(96, 192, SM, XXL),
+              height: 'max(2rem, 32px)',
+              marginBottom: fluid(64, 192, SM, XXL),
             }}
             src={Logo}
             alt="Queen City Development Group logo"
@@ -29,10 +29,10 @@ export default function Root() {
         <p className="lead">Use these resources to keep the Queen City brand consistent and looking it’s best.</p>
       </header>
       <Nav menu={menuItems} />
-      <main css={{ marginTop: fluid(96, 192, SM, XXL), marginBottom: fluid(96, 192, SM, XXL) }}>
+      <main css={{ marginTop: fluid(64, 192, SM, XXL), marginBottom: fluid(64, 192, SM, XXL) }}>
         <AnimatedOutlet />
       </main>
-      <footer css={{ marginTop: fluid(96, 192, SM, XXL), marginBottom: fluid(96, 192, SM, XXL) }}>
+      <footer css={{ marginTop: fluid(64, 192, SM, XXL), marginBottom: fluid(64, 192, SM, XXL) }}>
         <div className="container">
           <p>&copy; 2024 Queen City Development Group</p>
         </div>

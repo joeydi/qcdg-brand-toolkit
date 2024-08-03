@@ -1,8 +1,9 @@
 import { RefObject } from 'react';
 import { css } from '@emotion/react';
-import { fluid, SM, XXL, EASE_IN, EASE_OUT } from '../styles';
+import { SM, XXL, MQ, EASE_IN, EASE_OUT, fluid } from '../styles';
 import Section from '../components/Section';
 import File from '../components/File';
+import { MaterialSymbolsFileSaveRounded } from '../icons';
 import { primaryColors, secondaryColors } from './Colors';
 import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -56,7 +57,6 @@ const navStyles = css`
   display: flex;
   flex-flow: row wrap;
   gap: 1rem;
-  /* margin: ${fluid(48, 96, SM, XXL)} 0; */
 
   button {
     display: flex;
@@ -123,6 +123,10 @@ const variants = {
 };
 
 const downloadButtonStyles = css({
+  flexGrow: 1,
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.5rem',
   padding: '0.5rem 1.25rem',
   backgroundColor: 'rgba(255, 255, 255, 0.25)',
   border: '1px solid var(--color-sawdust)',
@@ -133,6 +137,7 @@ const downloadButtonStyles = css({
   letterSpacing: '0.03125rem',
   fontFamily: 'var(--ff-mono)',
   fontWeight: 'var(--fw-medium)',
+  fontSize: fluid(14, 18, SM, XXL),
   color: 'var(--color-slate)',
   cursor: 'pointer',
   transition: 'background-color 0.25s, color 0.25s',
@@ -146,12 +151,16 @@ const downloadButtonStyles = css({
     backgroundColor: 'rgba(255, 255, 255, 0.75)',
     color: 'var(--color-night)',
   },
+
+  [MQ.md]: {
+    flexGrow: 0,
+  },
 });
 
 export default function Logo() {
   const [logoColor, setLogoColor] = useState(colors[1]);
   const [logoStyle, setLogoStyle] = useState('QCDG');
-  const backgroundColor = hexToLuminance(logoColor.hex) > 0.5 ? 'var(--color-slate)' : 'var(--color-sand)';
+  const backgroundColor = hexToLuminance(logoColor.hex) > 0.5 ? 'var(--color-slate)' : 'rgba(255, 255, 255, 0.125)';
   const darkButtonStyles =
     hexToLuminance(logoColor.hex) > 0.5
       ? css({
@@ -266,7 +275,7 @@ export default function Logo() {
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: backgroundColor,
-            borderRadius: 4,
+            borderRadius: 8,
             border: '1px solid var(--color-sawdust)',
             transition: 'background-color 0.25s',
           }}>
@@ -295,24 +304,30 @@ export default function Logo() {
               </motion.div>
             )}
           </AnimatePresence>
-          <div
-            css={{
+        </div>
+        <div
+          css={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '1rem',
+            margin: '1rem 0',
+
+            [MQ.md]: {
               position: 'absolute',
-              bottom: '1rem',
+              bottom: 0,
               left: 0,
               width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '1rem',
-            }}>
-            <button css={[downloadButtonStyles, darkButtonStyles]} onClick={downloadSVG}>
-              Download SVG
-            </button>
-            <button css={[downloadButtonStyles, darkButtonStyles]} onClick={downloadPNG}>
-              Download PNG
-            </button>
-          </div>
+            },
+          }}>
+          <button css={[downloadButtonStyles, darkButtonStyles]} onClick={downloadSVG}>
+            <MaterialSymbolsFileSaveRounded />
+            Download SVG
+          </button>
+          <button css={[downloadButtonStyles, darkButtonStyles]} onClick={downloadPNG}>
+            <MaterialSymbolsFileSaveRounded />
+            Download PNG
+          </button>
         </div>
       </Section>
     </>
